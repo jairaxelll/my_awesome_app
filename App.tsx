@@ -33,12 +33,10 @@ const App: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [inputText, setInputText] = useState<string>('');
 
-  // Load tasks from AsyncStorage on app start
   useEffect(() => {
     loadTasks();
   }, []);
 
-  // Save tasks to AsyncStorage whenever tasks change
   useEffect(() => {
     if (tasks.length > 0) {
       saveTasks();
@@ -120,18 +118,15 @@ const App: React.FC = () => {
     };
 
     const handlePress = (): void => {
-      // Get current animation value
       (slideAnim as any)._value = (slideAnim as any)._value || 0;
       
       if ((slideAnim as any)._value < 0) {
-        // Reset slide animation
         Animated.timing(slideAnim, {
           toValue: 0,
           duration: 300,
           useNativeDriver: true,
         }).start();
       } else {
-        // Toggle completion
         toggleTaskComplete(task.id);
       }
     };
@@ -204,7 +199,6 @@ const App: React.FC = () => {
         </View>
       </View>
 
-      {/* Add Task Section */}
       <View style={styles.addTaskContainer}>
         <TextInput
           style={styles.textInput}
