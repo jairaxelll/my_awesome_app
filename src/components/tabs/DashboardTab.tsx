@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { dashboardStyles } from '../../styles/dashboard';
 import { Customer, Deal, Task, DashboardStats } from '../../types';
 import { formatCurrency, formatDate, getTaskStatusIcon } from '../../utils/helpers';
@@ -60,7 +61,10 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
 
       {overdueTasks.length > 0 && (
         <View style={dashboardStyles.alertSection}>
-          <Text style={dashboardStyles.alertTitle}>⚠️ Overdue Tasks</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+            <Icon name="alert" size={20} color="#dc2626" style={{ marginRight: 8 }} />
+            <Text style={dashboardStyles.alertTitle}>Overdue Tasks</Text>
+          </View>
           {overdueTasks.slice(0, 3).map(task => (
             <View key={task.id} style={dashboardStyles.alertItem}>
               <Text style={dashboardStyles.alertText}>{task.title}</Text>

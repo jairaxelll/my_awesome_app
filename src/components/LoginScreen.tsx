@@ -10,6 +10,7 @@ import {
   Platform,
   ScrollView,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useAuth } from '../hooks/useAuth';
 
 export const LoginScreen: React.FC = () => {
@@ -56,7 +57,10 @@ export const LoginScreen: React.FC = () => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.content}>
           <View style={styles.header}>
-            <Text style={styles.title}>🚀 Pro CRM</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+              <Icon name="star-four-points" size={32} color="#6366f1" style={{ marginRight: 12 }} />
+              <Text style={styles.title}>Pro CRM</Text>
+            </View>
             <Text style={styles.subtitle}>Sign in to your account</Text>
           </View>
 
@@ -127,7 +131,7 @@ export const LoginScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#f0f4f8',
   },
   scrollContainer: {
     flexGrow: 1,
@@ -136,64 +140,73 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: 24,
+    paddingHorizontal: 28,
     paddingVertical: 40,
   },
   header: {
     alignItems: 'center',
-    marginBottom: 48,
+    marginBottom: 52,
   },
   title: {
-    fontSize: 32,
-    fontWeight: '800',
-    color: '#1a1a1a',
-    marginBottom: 8,
-    letterSpacing: 0.5,
+    fontSize: 38,
+    fontWeight: '900',
+    color: '#6366f1',
+    marginBottom: 10,
+    letterSpacing: 1,
+    textShadowColor: 'rgba(99, 102, 241, 0.15)',
+    textShadowOffset: { width: 0, height: 3 },
+    textShadowRadius: 6,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 17,
     color: '#64748b',
-    fontWeight: '500',
+    fontWeight: '600',
   },
   form: {
-    marginBottom: 32,
+    marginBottom: 36,
   },
   inputContainer: {
-    marginBottom: 20,
+    marginBottom: 24,
   },
   label: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 15,
+    fontWeight: '700',
     color: '#374151',
-    marginBottom: 8,
+    marginBottom: 10,
   },
   input: {
     backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: '#d1d5db',
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    borderWidth: 2,
+    borderColor: '#e0e7ff',
+    borderRadius: 16,
+    paddingHorizontal: 18,
+    paddingVertical: 16,
     fontSize: 16,
     color: '#1f2937',
+    elevation: 2,
+    shadowColor: '#6366f1',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
   },
   messageContainer: {
-    borderRadius: 12,
-    padding: 12,
-    marginBottom: 16,
-    borderWidth: 1,
+    borderRadius: 16,
+    padding: 14,
+    marginBottom: 18,
+    borderWidth: 2,
+    elevation: 2,
   },
   successMessage: {
     backgroundColor: '#f0fdf4',
-    borderColor: '#bbf7d0',
+    borderColor: '#86efac',
   },
   errorMessage: {
     backgroundColor: '#fef2f2',
-    borderColor: '#fecaca',
+    borderColor: '#fca5a5',
   },
   messageText: {
-    fontSize: 14,
-    fontWeight: '500',
+    fontSize: 15,
+    fontWeight: '600',
     textAlign: 'center',
   },
   successText: {
@@ -203,42 +216,53 @@ const styles = StyleSheet.create({
     color: '#dc2626',
   },
   loginButton: {
-    backgroundColor: '#3b82f6',
-    borderRadius: 12,
-    paddingVertical: 16,
+    backgroundColor: '#6366f1',
+    borderRadius: 16,
+    paddingVertical: 18,
     alignItems: 'center',
-    marginTop: 8,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    marginTop: 10,
+    elevation: 8,
+    shadowColor: '#6366f1',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    borderWidth: 2,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
   },
   loginButtonDisabled: {
     backgroundColor: '#9ca3af',
+    elevation: 2,
+    shadowOpacity: 0.2,
   },
   loginButtonText: {
     color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 17,
+    fontWeight: '800',
+    letterSpacing: 0.5,
   },
   demoCredentials: {
     backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderRadius: 20,
+    padding: 20,
+    borderWidth: 2,
+    borderColor: '#e0e7ff',
+    elevation: 4,
+    shadowColor: '#6366f1',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
   },
   demoTitle: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 15,
+    fontWeight: '700',
     color: '#374151',
-    marginBottom: 8,
+    marginBottom: 10,
   },
   demoText: {
-    fontSize: 12,
+    fontSize: 13,
     color: '#6b7280',
-    marginBottom: 4,
+    marginBottom: 5,
     fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace',
+    fontWeight: '600',
   },
 });

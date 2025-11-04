@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, FlatList, TextInput, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { cardStyles } from '../../styles/cards';
 import { Sale } from '../../types';
 import { formatCurrency, formatDate } from '../../utils/helpers';
@@ -39,11 +40,11 @@ export const SalesTab: React.FC<SalesTabProps> = ({
 
   const getPaymentMethodIcon = (method: string): string => {
     switch (method) {
-      case 'cash': return '💵';
-      case 'card': return '💳';
-      case 'transfer': return '🏦';
-      case 'check': return '📝';
-      default: return '💰';
+      case 'cash': return 'cash';
+      case 'card': return 'credit-card';
+      case 'transfer': return 'bank-transfer';
+      case 'check': return 'checkbook';
+      default: return 'currency-usd';
     }
   };
 
@@ -70,10 +71,13 @@ export const SalesTab: React.FC<SalesTabProps> = ({
             </View>
             <Text style={cardStyles.customerCompany}>Customer: {item.customerName}</Text>
             <Text style={cardStyles.customerEmail}>Employee: {item.employeeName}</Text>
-            <Text style={cardStyles.customerPhone}>
-              Amount: {formatCurrency(item.finalAmount, { currency: 'USD' })} | 
-              {getPaymentMethodIcon(item.paymentMethod)} {item.paymentMethod}
-            </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
+              <Text style={cardStyles.customerPhone}>
+                Amount: {formatCurrency(item.finalAmount, { currency: 'USD' })} | 
+              </Text>
+              <Icon name={getPaymentMethodIcon(item.paymentMethod)} size={14} color="#94a3b8" style={{ marginHorizontal: 4 }} />
+              <Text style={cardStyles.customerPhone}>{item.paymentMethod}</Text>
+            </View>
             <Text style={[cardStyles.customerPhone, { marginTop: 4 }]}>
               Date: {formatDate(item.saleDate)}
             </Text>

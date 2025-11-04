@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { dashboardStyles } from '../../styles/dashboard';
 import { AdminDashboardStats, Product, Sale, Employee, Task } from '../../types';
 import { formatCurrency } from '../../utils/helpers';
@@ -71,7 +72,10 @@ export const AdminDashboardTab: React.FC<AdminDashboardTabProps> = ({
 
       {lowStockProducts.length > 0 && (
         <View style={dashboardStyles.alertSection}>
-          <Text style={dashboardStyles.alertTitle}>⚠️ Low Stock Alert</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+            <Icon name="alert" size={20} color="#dc2626" style={{ marginRight: 8 }} />
+            <Text style={dashboardStyles.alertTitle}>Low Stock Alert</Text>
+          </View>
           {lowStockProducts.slice(0, 3).map(product => (
             <View key={product.id} style={dashboardStyles.alertItem}>
               <Text style={dashboardStyles.alertText}>{product.name}</Text>
@@ -83,7 +87,10 @@ export const AdminDashboardTab: React.FC<AdminDashboardTabProps> = ({
 
       {pendingTasks.length > 0 && (
         <View style={dashboardStyles.alertSection}>
-          <Text style={dashboardStyles.alertTitle}>📋 Pending Tasks</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+            <Icon name="clipboard-list" size={20} color="#dc2626" style={{ marginRight: 8 }} />
+            <Text style={dashboardStyles.alertTitle}>Pending Tasks</Text>
+          </View>
           {pendingTasks.slice(0, 3).map(task => (
             <View key={task.id} style={dashboardStyles.alertItem}>
               <Text style={dashboardStyles.alertText}>{task.title}</Text>
@@ -94,10 +101,13 @@ export const AdminDashboardTab: React.FC<AdminDashboardTabProps> = ({
       )}
 
       <View style={dashboardStyles.recentSection}>
-        <Text style={dashboardStyles.sectionTitle}>Recent Sales</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 16 }}>
+          <Icon name="currency-usd" size={20} color="#1e293b" style={{ marginRight: 8 }} />
+          <Text style={dashboardStyles.sectionTitle}>Recent Sales</Text>
+        </View>
         {recentSales.map(sale => (
           <View key={sale.id} style={dashboardStyles.activityItem}>
-            <Text style={dashboardStyles.activityIcon}>💰</Text>
+            <Icon name="cash" size={18} color="#10b981" style={{ marginRight: 12 }} />
             <View style={dashboardStyles.activityContent}>
               <Text style={dashboardStyles.activityTitle}>Sale #{sale.id}</Text>
               <Text style={dashboardStyles.activitySubtitle}>{sale.customerName} - {sale.employeeName}</Text>
@@ -110,7 +120,10 @@ export const AdminDashboardTab: React.FC<AdminDashboardTabProps> = ({
       </View>
 
       <View style={dashboardStyles.recentSection}>
-        <Text style={dashboardStyles.sectionTitle}>📊 Quick Stats</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 16 }}>
+          <Icon name="chart-line" size={20} color="#1e293b" style={{ marginRight: 8 }} />
+          <Text style={dashboardStyles.sectionTitle}>Quick Stats</Text>
+        </View>
         <View style={dashboardStyles.noteItem}>
           <Text style={dashboardStyles.noteItemTitle}>Task Completion Rate</Text>
           <Text style={dashboardStyles.noteItemContent}>

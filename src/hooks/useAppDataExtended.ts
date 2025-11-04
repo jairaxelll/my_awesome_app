@@ -55,8 +55,6 @@ export const useAppDataExtended = () => {
         setCustomers(getSampleCustomers());
         setDeals(getSampleDeals());
         setTasks(getSampleTasks());
-        setNotes(getSampleNotes());
-        setActivities(getSampleActivities());
         addNotification('Welcome to Pro CRM!', 'Your comprehensive business management suite is ready to use.', 'info');
       }
 

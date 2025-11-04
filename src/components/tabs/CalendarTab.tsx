@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { calendarStyles } from '../../styles/calendar';
 import { Task } from '../../types';
 import { formatDate, getTaskStatusIcon } from '../../utils/helpers';
@@ -22,7 +23,10 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
   return (
     <View style={{ flex: 1 }}>
       <View style={calendarStyles.calendarHeader}>
-        <Text style={calendarStyles.calendarTitle}>📅 Calendar View</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+          <Icon name="calendar-month" size={20} color="#1e293b" style={{ marginRight: 8 }} />
+          <Text style={calendarStyles.calendarTitle}>Calendar View</Text>
+        </View>
         <Text style={calendarStyles.calendarDate}>{formatDate(selectedDate)}</Text>
       </View>
       <ScrollView style={calendarStyles.calendarContent}>

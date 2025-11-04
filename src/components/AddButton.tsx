@@ -1,5 +1,6 @@
 import React from 'react';
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity, Animated } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { styles } from '../styles';
 import { TabType, ModalType } from '../types';
 
@@ -9,6 +10,8 @@ interface AddButtonProps {
 }
 
 export const AddButton: React.FC<AddButtonProps> = ({ activeTab, onPress }) => {
+  const scaleValue = React.useRef(new Animated.Value(1)).current;
+
   if (activeTab === 'settings') {
     return null;
   }
@@ -23,14 +26,36 @@ export const AddButton: React.FC<AddButtonProps> = ({ activeTab, onPress }) => {
     'calendar': 'task'
   };
 
+  const handlePressIn = () => {
+    Animated.spring(scaleValue, {
+      toValue: 0.9,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(scaleValue, {
+      toValue: 1,
+      useNativeDriver: true,
+    }).start();
+  };
+
   const handlePress = () => {
     const modalType = modalTypeMap[activeTab] || 'customer';
     onPress(modalType);
   };
 
   return (
-    <TouchableOpacity style={styles.addButton} onPress={handlePress}>
-      <Text style={styles.addButtonText}>+</Text>
-    </TouchableOpacity>
+    <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
+      <TouchableOpacity 
+        style={styles.addButton} 
+        onPress={handlePress}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        activeOpacity={0.8}
+      >
+        <Icon name="plus" size={32} color="white" />
+      </TouchableOpacity>
+    </Animated.View>
   );
 };

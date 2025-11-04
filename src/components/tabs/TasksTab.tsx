@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, FlatList, TextInput, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { cardStyles } from '../../styles/cards';
 import { Task } from '../../types';
 import { getPriorityColor, getTaskStatusIcon, formatDate, isOverdue } from '../../utils/helpers';
@@ -52,13 +53,19 @@ export const TasksTab: React.FC<TasksTabProps> = ({
             </View>
             <Text style={cardStyles.taskDescription}>{item.description}</Text>
             <View style={cardStyles.taskFooter}>
-              <Text style={cardStyles.taskAssignee}>👤 {item.assignedTo}</Text>
-              <Text style={[
-                cardStyles.taskDueDate,
-                isOverdue(item.dueDate) && item.status !== 'completed' && cardStyles.overdueText
-              ]}>
-                📅 {formatDate(item.dueDate)}
-              </Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Icon name="account" size={14} color="#64748b" style={{ marginRight: 4 }} />
+                <Text style={cardStyles.taskAssignee}>{item.assignedTo}</Text>
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Icon name="calendar" size={14} color={isOverdue(item.dueDate) && item.status !== 'completed' ? '#dc2626' : '#64748b'} style={{ marginRight: 4 }} />
+                <Text style={[
+                  cardStyles.taskDueDate,
+                  isOverdue(item.dueDate) && item.status !== 'completed' && cardStyles.overdueText
+                ]}>
+                  {formatDate(item.dueDate)}
+                </Text>
+              </View>
             </View>
             {item.status !== 'completed' && (
               <TouchableOpacity

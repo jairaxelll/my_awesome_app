@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { styles } from '../styles';
 import { TabType, UserRole } from '../types';
 
@@ -11,14 +12,14 @@ interface TabNavigationProps {
 
 export const TabNavigation: React.FC<TabNavigationProps> = ({ activeTab, onTabPress, userRole }) => {
   const allTabs: { key: TabType; label: string; icon: string; adminOnly?: boolean }[] = [
-    { key: 'dashboard', label: 'Dashboard', icon: '📊' },
-    { key: 'customers', label: 'Customers', icon: '👥' },
-    { key: 'sales', label: 'Sales', icon: '💰' },
-    { key: 'tasks', label: 'Tasks', icon: '✅' },
-    { key: 'products', label: 'Products', icon: '📦' },
-    { key: 'employees', label: 'Employees', icon: '👨‍💼', adminOnly: true },
-    { key: 'calendar', label: 'Calendar', icon: '📅' },
-    { key: 'settings', label: 'Settings', icon: '⚙️' },
+    { key: 'dashboard', label: 'Dashboard', icon: 'view-dashboard' },
+    { key: 'customers', label: 'Customers', icon: 'account-group' },
+    { key: 'sales', label: 'Sales', icon: 'currency-usd' },
+    { key: 'tasks', label: 'Tasks', icon: 'check-circle' },
+    { key: 'products', label: 'Products', icon: 'package-variant' },
+    { key: 'employees', label: 'Employees', icon: 'account-tie', adminOnly: true },
+    { key: 'calendar', label: 'Calendar', icon: 'calendar' },
+    { key: 'settings', label: 'Settings', icon: 'cog' },
   ];
 
   // Filter tabs based on user role
@@ -33,8 +34,13 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({ activeTab, onTabPr
             style={[styles.tab, activeTab === tab.key && styles.activeTab]}
             onPress={() => onTabPress(tab.key)}
           >
-            <Text style={[styles.tabText, activeTab === tab.key && styles.activeTabText]}>
-              {tab.icon} {tab.label}
+            <Icon 
+              name={tab.icon} 
+              size={18} 
+              color={activeTab === tab.key ? '#6366f1' : '#64748b'} 
+            />
+            <Text style={[styles.tabText, activeTab === tab.key && styles.activeTabText, { marginTop: 4 }]}>
+              {tab.label}
             </Text>
           </TouchableOpacity>
         ))}

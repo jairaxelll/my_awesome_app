@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { styles } from '../styles';
 import { User } from '../types';
 
@@ -19,20 +20,23 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <View style={styles.header}>
       <View style={styles.headerTop}>
-        <View style={{ flex: 1 }}>
-          <Text style={styles.headerTitle}>🚀 Pro CRM</Text>
-          {user && (
-            <Text style={[styles.headerSubtitle, { textAlign: 'left', marginTop: 2 }]}>
-              Welcome, {user.firstName} ({user.role})
-            </Text>
-          )}
+        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+          <Icon name="star-four-points" size={26} color="white" style={{ marginRight: 8 }} />
+          <View>
+            <Text style={styles.headerTitle}>Pro CRM</Text>
+            {user && (
+              <Text style={[styles.headerSubtitle, { textAlign: 'left', marginTop: 4 }]}>
+                Welcome back, {user.firstName}!
+              </Text>
+            )}
+          </View>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <TouchableOpacity
             style={styles.notificationButton}
             onPress={onNotificationPress}
           >
-            <Text style={styles.notificationIcon}>🔔</Text>
+            <Icon name="bell" size={22} color="white" />
             {unreadNotificationsCount > 0 && (
               <View style={styles.notificationBadge}>
                 <Text style={styles.notificationBadgeText}>{unreadNotificationsCount}</Text>
@@ -40,10 +44,10 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.notificationButton, { marginLeft: 8 }]}
+            style={styles.notificationButton}
             onPress={onLogout}
           >
-            <Text style={styles.notificationIcon}>🚪</Text>
+            <Icon name="logout" size={22} color="white" />
           </TouchableOpacity>
         </View>
       </View>

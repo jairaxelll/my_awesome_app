@@ -74,24 +74,32 @@ export const loadData = async (): Promise<{
 export const saveData = async (data: {
   customers: Customer[];
   deals: Deal[];
-  activities: Activity[];
+  activities?: Activity[];
   tasks: Task[];
-  notes: Note[];
+  notes?: Note[];
   reports: Report[];
   notifications: Notification[];
   settings: Settings;
 }): Promise<void> => {
   try {
-    await Promise.all([
+    const savePromises = [
       AsyncStorage.setItem('customers', JSON.stringify(data.customers)),
       AsyncStorage.setItem('deals', JSON.stringify(data.deals)),
-      AsyncStorage.setItem('activities', JSON.stringify(data.activities)),
       AsyncStorage.setItem('tasks', JSON.stringify(data.tasks)),
-      AsyncStorage.setItem('notes', JSON.stringify(data.notes)),
       AsyncStorage.setItem('reports', JSON.stringify(data.reports)),
       AsyncStorage.setItem('notifications', JSON.stringify(data.notifications)),
       AsyncStorage.setItem('settings', JSON.stringify(data.settings)),
-    ]);
+    ];
+
+    // Only save if provided (to avoid undefined errors)
+    if (data.activities !== undefined) {
+      savePromises.push(AsyncStorage.setItem('activities', JSON.stringify(data.activities)));
+    }
+    if (data.notes !== undefined) {
+      savePromises.push(AsyncStorage.setItem('notes', JSON.stringify(data.notes)));
+    }
+
+    await Promise.all(savePromises);
   } catch (error) {
     console.error('Error saving data:', error);
   }

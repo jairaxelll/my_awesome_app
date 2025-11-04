@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { Modal, View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { modalStyles } from '../styles/modals';
 import { ModalType } from '../types';
 
@@ -291,7 +291,12 @@ export const AddModal: React.FC<AddModalProps> = ({
         <View style={modalStyles.modalContent}>
           <Text style={modalStyles.modalTitle}>{getModalTitle()}</Text>
           
-          {renderFields()}
+          <ScrollView 
+            style={{ maxHeight: '70%' }}
+            showsVerticalScrollIndicator={false}
+          >
+            {renderFields()}
+          </ScrollView>
 
           <View style={modalStyles.modalButtons}>
             <TouchableOpacity style={modalStyles.modalButton} onPress={onClose}>
