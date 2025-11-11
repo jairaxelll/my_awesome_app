@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { styles } from '../styles';
 import { User } from '../types';
@@ -21,9 +21,9 @@ export const Header: React.FC<HeaderProps> = ({
     <View style={styles.header}>
       <View style={styles.headerTop}>
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-          <Icon name="star-four-points" size={26} color="white" style={{ marginRight: 8 }} />
+          <Image source={require('../../Logo.jpg')} style={styles.headerLogo} />
           <View>
-            <Text style={styles.headerTitle}>Pro CRM</Text>
+            <Text style={styles.headerTitle}>Todo para uñas</Text>
             {user && (
               <Text style={[styles.headerSubtitle, { textAlign: 'left', marginTop: 4 }]}>
                 Welcome back, {user.firstName}!
@@ -52,7 +52,7 @@ export const Header: React.FC<HeaderProps> = ({
         </View>
       </View>
       {!user && (
-        <Text style={styles.headerSubtitle}>Complete business management suite</Text>
+        <Text style={styles.headerSubtitle}>Insumos y gestión para salones de uñas</Text>
       )}
     </View>
   );

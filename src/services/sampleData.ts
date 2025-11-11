@@ -3,71 +3,71 @@ import { Customer, Deal, Activity, Task, Note } from '../types';
 export const getSampleCustomers = (): Customer[] => [
   {
     id: '1',
-    name: 'John Smith',
-    email: 'john@techcorp.com',
-    phone: '+1-555-0123',
-    company: 'TechCorp Inc.',
+    name: 'Diana Morales',
+    email: 'diana@lunanails.mx',
+    phone: '+52-55-5555-0101',
+    company: 'Luna Nails Studio',
     status: 'customer',
     createdAt: new Date().toISOString(),
     lastContact: new Date().toISOString(),
-    notes: 'VIP customer, prefers email communication'
+    notes: 'Compra mensualmente kits de gel y valora entregas puntuales los lunes.'
   },
   {
     id: '2',
-    name: 'Sarah Johnson',
-    email: 'sarah@innovate.com',
-    phone: '+1-555-0456',
-    company: 'Innovate Solutions',
+    name: 'Paola Rivera',
+    email: 'paola@colorpopbeauty.com',
+    phone: '+52-33-4444-0202',
+    company: 'ColorPop Beauty Bar',
     status: 'prospect',
     createdAt: new Date().toISOString(),
     lastContact: new Date().toISOString(),
-    notes: 'Interested in enterprise package'
+    notes: 'Solicitó cotización de tonos pastel para nueva temporada.'
   },
   {
     id: '3',
-    name: 'Mike Davis',
-    email: 'mike@startup.io',
-    phone: '+1-555-0789',
-    company: 'StartupIO',
+    name: 'Laura Torres',
+    email: 'laura@glowstudio.mx',
+    phone: '+52-81-6666-0303',
+    company: 'Glow Studio Nails & Spa',
     status: 'lead',
     createdAt: new Date().toISOString(),
     lastContact: new Date().toISOString(),
-    notes: 'Cold lead from LinkedIn'
+    notes: 'Interesada en paquetes de capacitación y combos de inicio.'
   }
 ];
 
 export const getSampleDeals = (): Deal[] => [
   {
     id: '1',
-    title: 'Enterprise Software License',
+    title: 'Pedido mayorista de geles nude',
     customerId: '1',
-    customerName: 'John Smith',
-    value: 50000,
+    customerName: 'Diana Morales',
+    value: 8200,
     stage: 'negotiation',
-    probability: 75,
-    expectedCloseDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+    probability: 70,
+    expectedCloseDate: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000).toISOString(),
     createdAt: new Date().toISOString(),
-    notes: 'Final pricing discussion next week'
+    notes: 'Revisión de inventario y ajuste de precio por volumen.'
   },
   {
     id: '2',
-    title: 'Cloud Migration Project',
+    title: 'Kit premium para nueva sucursal',
     customerId: '2',
-    customerName: 'Sarah Johnson',
-    value: 25000,
+    customerName: 'Paola Rivera',
+    value: 5400,
     stage: 'proposal',
-    probability: 60,
-    expectedCloseDate: new Date(Date.now() + 45 * 24 * 60 * 60 * 1000).toISOString(),
+    probability: 55,
+    expectedCloseDate: new Date(Date.now() + 35 * 24 * 60 * 60 * 1000).toISOString(),
     createdAt: new Date().toISOString(),
-    notes: 'Waiting for budget approval'
+    notes: 'Enviada propuesta con lámparas UV, mesas y acrílicos.'
   }
 ];
 
 export const getSampleTasks = (): Task[] => [
   {
     id: '1',
-    title: 'Follow up with John Smith',
-    description: 'Call to discuss final contract terms',
+    title: 'Confirmar tonos nude con Diana',
+    description: 'Enviar fotos de la nueva colección y validar existencias para el pedido.',
     priority: 'high',
     status: 'pending',
     dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
@@ -77,8 +77,8 @@ export const getSampleTasks = (): Task[] => [
   },
   {
     id: '2',
-    title: 'Prepare demo for Sarah',
-    description: 'Create custom demo for Innovate Solutions',
+    title: 'Cotizar mobiliario para Paola',
+    description: 'Armar paquete que incluya lámparas UV, mesas y organizadores.',
     priority: 'medium',
     status: 'in-progress',
     dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
@@ -88,8 +88,8 @@ export const getSampleTasks = (): Task[] => [
   },
   {
     id: '3',
-    title: 'Send proposal to Mike',
-    description: 'Email initial proposal to StartupIO',
+    title: 'Enviar plan de capacitaciones a Laura',
+    description: 'Adjuntar agenda de talleres de aplicación de acrílico y nail art.',
     priority: 'low',
     status: 'pending',
     dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
@@ -102,21 +102,21 @@ export const getSampleTasks = (): Task[] => [
 export const getSampleNotes = (): Note[] => [
   {
     id: '1',
-    title: 'Meeting with John - Key Points',
-    content: 'Discussed pricing structure and implementation timeline. He seems very interested in our enterprise features.',
+    title: 'Visita a Luna Nails',
+    content: 'Diana necesita reposición cada tres semanas. Sugirió agregar displays para esmaltes en la tienda.',
     type: 'meeting',
     relatedId: '1',
-    tags: ['meeting', 'enterprise', 'pricing'],
+    tags: ['visita', 'inventario', 'ideas'],
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     isPinned: true
   },
   {
     id: '2',
-    title: 'Competitor Analysis',
-    content: 'Researched competitors in the CRM space. Our pricing is competitive and features are superior.',
+    title: 'Tendencias primavera',
+    content: 'Mayor demanda de tonos pastel y efectos perlados. Preparar campaña cruzada con redes sociales.',
     type: 'general',
-    tags: ['research', 'competitors', 'pricing'],
+    tags: ['tendencias', 'marketing', 'temporada'],
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     isPinned: false
@@ -127,10 +127,10 @@ export const getSampleActivities = (): Activity[] => [
   {
     id: '1',
     type: 'call',
-    title: 'Follow-up call with John Smith',
-    description: 'Discussed contract terms and next steps',
+    title: 'Seguimiento con Diana Morales',
+    description: 'Confirmó cantidades para kit nude y pidió agregar displays acrílicos.',
     customerId: '1',
-    customerName: 'John Smith',
+    customerName: 'Diana Morales',
     dealId: '1',
     date: new Date().toISOString(),
     completed: true
@@ -138,10 +138,10 @@ export const getSampleActivities = (): Activity[] => [
   {
     id: '2',
     type: 'meeting',
-    title: 'Product demo for Sarah',
-    description: 'Showed enterprise features and pricing',
+    title: 'Demo de lámparas UV para Paola',
+    description: 'Mostramos diferencias entre lámparas de 48W y 54W con ejemplos en vivo.',
     customerId: '2',
-    customerName: 'Sarah Johnson',
+    customerName: 'Paola Rivera',
     dealId: '2',
     date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
     completed: true

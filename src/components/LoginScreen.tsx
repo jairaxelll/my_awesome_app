@@ -9,8 +9,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Image,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useAuth } from '../hooks/useAuth';
 
 export const LoginScreen: React.FC = () => {
@@ -58,10 +58,10 @@ export const LoginScreen: React.FC = () => {
         <View style={styles.content}>
           <View style={styles.header}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-              <Icon name="star-four-points" size={32} color="#6366f1" style={{ marginRight: 12 }} />
-              <Text style={styles.title}>Pro CRM</Text>
+              <Image source={require('../../Logo.jpg')} style={styles.logoImage} />
+              <Text style={styles.title}>Todo para uñas</Text>
             </View>
-            <Text style={styles.subtitle}>Sign in to your account</Text>
+            <Text style={styles.subtitle}>Inicia sesión para gestionar tu negocio de uñas</Text>
           </View>
 
           <View style={styles.form}>
@@ -131,7 +131,7 @@ export const LoginScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f4f8',
+    backgroundColor: '#fff5fb',
   },
   scrollContainer: {
     flexGrow: 1,
@@ -150,10 +150,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 38,
     fontWeight: '900',
-    color: '#6366f1',
+    color: '#ec4899',
     marginBottom: 10,
     letterSpacing: 1,
-    textShadowColor: 'rgba(99, 102, 241, 0.15)',
+    textShadowColor: 'rgba(236, 72, 153, 0.25)',
     textShadowOffset: { width: 0, height: 3 },
     textShadowRadius: 6,
   },
@@ -177,14 +177,14 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: 'white',
     borderWidth: 2,
-    borderColor: '#e0e7ff',
+    borderColor: '#ffd6ef',
     borderRadius: 16,
     paddingHorizontal: 18,
     paddingVertical: 16,
     fontSize: 16,
     color: '#1f2937',
     elevation: 2,
-    shadowColor: '#6366f1',
+    shadowColor: '#ec4899',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 4,
@@ -216,13 +216,13 @@ const styles = StyleSheet.create({
     color: '#dc2626',
   },
   loginButton: {
-    backgroundColor: '#6366f1',
+    backgroundColor: '#ec4899',
     borderRadius: 16,
     paddingVertical: 18,
     alignItems: 'center',
     marginTop: 10,
     elevation: 8,
-    shadowColor: '#6366f1',
+    shadowColor: '#db2777',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.4,
     shadowRadius: 8,
@@ -245,9 +245,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 20,
     borderWidth: 2,
-    borderColor: '#e0e7ff',
+    borderColor: '#ffd6ef',
     elevation: 4,
-    shadowColor: '#6366f1',
+    shadowColor: '#ec4899',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 6,
@@ -264,5 +264,12 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace',
     fontWeight: '600',
+  },
+  logoImage: {
+    width: 44,
+    height: 44,
+    marginRight: 12,
+    borderRadius: 12,
+    resizeMode: 'contain',
   },
 });

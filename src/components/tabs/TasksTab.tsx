@@ -10,6 +10,8 @@ interface TasksTabProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
   onTaskComplete: (taskId: string) => void;
+  onEditTask?: (task: Task) => void;
+  onDeleteTask?: (taskId: string) => void;
 }
 
 export const TasksTab: React.FC<TasksTabProps> = ({
@@ -17,6 +19,8 @@ export const TasksTab: React.FC<TasksTabProps> = ({
   searchQuery,
   onSearchChange,
   onTaskComplete,
+  onEditTask,
+  onDeleteTask,
 }) => {
   const filteredTasks = tasks.filter(task =>
     task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -67,14 +71,32 @@ export const TasksTab: React.FC<TasksTabProps> = ({
                 </Text>
               </View>
             </View>
-            {item.status !== 'completed' && (
-              <TouchableOpacity
-                style={cardStyles.completeButton}
-                onPress={() => onTaskComplete(item.id)}
-              >
-                <Text style={cardStyles.completeButtonText}>Mark Complete</Text>
-              </TouchableOpacity>
-            )}
+            <View style={{ flexDirection: 'row', marginTop: 12, gap: 8 }}>
+              {item.status !== 'completed' && (
+                <TouchableOpacity
+                  style={[cardStyles.completeButton, { flex: 1 }]}
+                  onPress={() => onTaskComplete(item.id)}
+                >
+                  <Text style={cardStyles.completeButtonText}>Mark Complete</Text>
+                </TouchableOpacity>
+              )}
+              {onEditTask && (
+                <TouchableOpacity
+                  style={[cardStyles.completeButton, { backgroundColor: '#3b82f6', flex: 1 }]}
+                  onPress={() => onEditTask(item)}
+                >
+                  <Text style={cardStyles.completeButtonText}>Edit</Text>
+                </TouchableOpacity>
+              )}
+              {onDeleteTask && (
+                <TouchableOpacity
+                  style={[cardStyles.completeButton, { backgroundColor: '#ef4444', flex: 1 }]}
+                  onPress={() => onDeleteTask(item.id)}
+                >
+                  <Text style={cardStyles.completeButtonText}>Delete</Text>
+                </TouchableOpacity>
+              )}
+            </View>
           </View>
         )}
         showsVerticalScrollIndicator={false}

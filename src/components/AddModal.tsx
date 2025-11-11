@@ -10,6 +10,7 @@ interface AddModalProps {
   onFormDataChange: (field: string, value: any) => void;
   onAdd: () => void;
   onClose: () => void;
+  isEditing?: boolean;
 }
 
 export const AddModal: React.FC<AddModalProps> = ({
@@ -19,15 +20,17 @@ export const AddModal: React.FC<AddModalProps> = ({
   onFormDataChange,
   onAdd,
   onClose,
+  isEditing = false,
 }) => {
   const getModalTitle = () => {
+    const prefix = isEditing ? 'Edit' : 'Add';
     switch (modalType) {
-      case 'customer': return 'Add Customer';
-      case 'sale': return 'Add Sale';
-      case 'task': return 'Add Task';
-      case 'product': return 'Add Product';
-      case 'employee': return 'Add Employee';
-      default: return 'Add Item';
+      case 'customer': return `${prefix} Customer`;
+      case 'sale': return `${prefix} Sale`;
+      case 'task': return `${prefix} Task`;
+      case 'product': return `${prefix} Product`;
+      case 'employee': return `${prefix} Employee`;
+      default: return `${prefix} Item`;
     }
   };
 
@@ -306,7 +309,9 @@ export const AddModal: React.FC<AddModalProps> = ({
               style={[modalStyles.modalButton, modalStyles.modalButtonPrimary]}
               onPress={onAdd}
             >
-              <Text style={[modalStyles.modalButtonText, modalStyles.modalButtonTextPrimary]}>Add</Text>
+              <Text style={[modalStyles.modalButtonText, modalStyles.modalButtonTextPrimary]}>
+                {isEditing ? 'Update' : 'Add'}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -55,7 +55,7 @@ export const useAppDataExtended = () => {
         setCustomers(getSampleCustomers());
         setDeals(getSampleDeals());
         setTasks(getSampleTasks());
-        addNotification('Welcome to Pro CRM!', 'Your comprehensive business management suite is ready to use.', 'info');
+        addNotification('Bienvenida a Todo para uñas', 'Tu plataforma integral para salones de uñas está lista para usarse.', 'info');
       }
 
       if (savedProducts.length === 0) {

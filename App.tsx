@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StatusBar, Animated, Alert } from 'react-native';
 import { styles } from './src/styles';
-import { TabType, UserRole } from './src/types';
+import { TabType, UserRole, Product, Sale, Employee, Customer, Task } from './src/types';
 import { useAuth } from './src/hooks/useAuth';
 import { useAppDataExtended } from './src/hooks/useAppDataExtended';
 import { useFormData } from './src/hooks/useFormData';
@@ -51,7 +51,7 @@ const App: React.FC = () => {
     markNotificationRead,
   } = useAppDataExtended();
 
-  const { formData, updateFormData, resetFormData } = useFormData();
+  const { formData, updateFormData, resetFormData, setFormData } = useFormData();
   const {
     showAddModal,
     modalType,
@@ -61,6 +61,9 @@ const App: React.FC = () => {
     openNotifications,
     closeNotifications,
   } = useModal();
+  
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingItemId, setEditingItemId] = useState<string | null>(null);
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
@@ -240,23 +243,47 @@ const App: React.FC = () => {
 
 
   const handleAdd = (): void => {
-    switch (modalType) {
-      case 'customer':
-        addCustomer();
-        break;
-      case 'sale':
-        addSale();
-        break;
-      case 'task':
-        addTask();
-        break;
-      case 'product':
-        addProduct();
-        break;
-      case 'employee':
-        addEmployee();
-        break;
+    if (isEditing && editingItemId) {
+      // Update mode
+      switch (modalType) {
+        case 'customer':
+          updateCustomer(editingItemId);
+          break;
+        case 'sale':
+          updateSale(editingItemId);
+          break;
+        case 'task':
+          updateTask(editingItemId);
+          break;
+        case 'product':
+          updateProduct(editingItemId);
+          break;
+        case 'employee':
+          updateEmployee(editingItemId);
+          break;
+      }
+    } else {
+      // Add mode
+      switch (modalType) {
+        case 'customer':
+          addCustomer();
+          break;
+        case 'sale':
+          addSale();
+          break;
+        case 'task':
+          addTask();
+          break;
+        case 'product':
+          addProduct();
+          break;
+        case 'employee':
+          addEmployee();
+          break;
+      }
     }
+    setIsEditing(false);
+    setEditingItemId(null);
   };
 
   const markTaskComplete = (taskId: string): void => {
@@ -266,6 +293,306 @@ const App: React.FC = () => {
         : task
     ));
     addNotification('Task Completed', 'A task has been marked as completed', 'success', taskId);
+  };
+
+  // Delete functions
+  const deleteProduct = (productId: string): void => {
+    Alert.alert(
+      'Delete Product',
+      'Are you sure you want to delete this product?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            const product = products.find(p => p.id === productId);
+            setProducts(products.filter(p => p.id !== productId));
+            addNotification('Product Deleted', `Product "${product?.name}" has been deleted.`, 'info');
+          }
+        }
+      ]
+    );
+  };
+
+  const deleteSale = (saleId: string): void => {
+    Alert.alert(
+      'Delete Sale',
+      'Are you sure you want to delete this sale?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            setSales(sales.filter(s => s.id !== saleId));
+            addNotification('Sale Deleted', 'Sale has been deleted.', 'info');
+          }
+        }
+      ]
+    );
+  };
+
+  const deleteEmployee = (employeeId: string): void => {
+    Alert.alert(
+      'Delete Employee',
+      'Are you sure you want to delete this employee?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            const employee = employees.find(e => e.id === employeeId);
+            setEmployees(employees.filter(e => e.id !== employeeId));
+            addNotification('Employee Deleted', `Employee "${employee?.firstName} ${employee?.lastName}" has been deleted.`, 'info');
+          }
+        }
+      ]
+    );
+  };
+
+  const deleteCustomer = (customerId: string): void => {
+    Alert.alert(
+      'Delete Customer',
+      'Are you sure you want to delete this customer?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            const customer = customers.find(c => c.id === customerId);
+            setCustomers(customers.filter(c => c.id !== customerId));
+            addNotification('Customer Deleted', `Customer "${customer?.name}" has been deleted.`, 'info');
+          }
+        }
+      ]
+    );
+  };
+
+  const deleteTask = (taskId: string): void => {
+    Alert.alert(
+      'Delete Task',
+      'Are you sure you want to delete this task?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            const task = tasks.find(t => t.id === taskId);
+            setTasks(tasks.filter(t => t.id !== taskId));
+            addNotification('Task Deleted', `Task "${task?.title}" has been deleted.`, 'info');
+          }
+        }
+      ]
+    );
+  };
+
+  // Update functions
+  const updateProduct = (productId: string): void => {
+    const existingProduct = products.find(p => p.id === productId);
+    if (!existingProduct) return;
+    
+    const updatedProduct: Product = {
+      ...existingProduct,
+      name: formData.name || existingProduct.name,
+      description: formData.description || existingProduct.description,
+      price: parseFloat(formData.price) || existingProduct.price,
+      cost: parseFloat(formData.cost) || existingProduct.cost,
+      category: formData.category || existingProduct.category,
+      sku: formData.sku || existingProduct.sku,
+      stock: parseInt(formData.stock) || existingProduct.stock,
+      minStock: parseInt(formData.minStock) || existingProduct.minStock,
+      updatedAt: new Date().toISOString(),
+    };
+    setProducts(products.map(p => p.id === productId ? updatedProduct : p));
+    closeAddModal();
+    resetFormData();
+    addNotification('Product Updated', `Product "${updatedProduct.name}" has been updated.`, 'success');
+  };
+
+  const updateSale = (saleId: string): void => {
+    const existingSale = sales.find(s => s.id === saleId);
+    if (!existingSale) return;
+    
+    const customer = customers.find(c => c.id === formData.customerId);
+    const employee = employees.find(e => e.id === formData.employeeId);
+    const product = products.find(p => p.id === formData.productId);
+    
+    if (!customer || !employee || !product) {
+      Alert.alert('Error', 'Please select valid customer, employee, and product');
+      return;
+    }
+
+    const quantity = parseInt(formData.quantity) || 1;
+    const totalPrice = product.price * quantity;
+    const discount = parseFloat(formData.discount) || 0;
+    const finalAmount = totalPrice - discount;
+
+    const updatedSale: Sale = {
+      ...existingSale,
+      customerId: customer.id,
+      customerName: customer.name,
+      employeeId: employee.id,
+      employeeName: `${employee.firstName} ${employee.lastName}`,
+      products: [{
+        productId: product.id,
+        productName: product.name,
+        quantity,
+        unitPrice: product.price,
+        totalPrice,
+      }],
+      totalAmount: totalPrice,
+      discount,
+      finalAmount,
+      paymentMethod: formData.paymentMethod || 'cash',
+      saleDate: formData.saleDate || new Date().toISOString(),
+      notes: formData.notes || '',
+    };
+    setSales(sales.map(s => s.id === saleId ? updatedSale : s));
+    closeAddModal();
+    resetFormData();
+    addNotification('Sale Updated', 'Sale has been updated successfully.', 'success');
+  };
+
+  const updateEmployee = (employeeId: string): void => {
+    const existingEmployee = employees.find(e => e.id === employeeId);
+    if (!existingEmployee) return;
+    
+    const updatedEmployee: Employee = {
+      ...existingEmployee,
+      employeeId: formData.employeeId || existingEmployee.employeeId,
+      firstName: formData.firstName || existingEmployee.firstName,
+      lastName: formData.lastName || existingEmployee.lastName,
+      email: formData.email || existingEmployee.email,
+      phone: formData.phone || existingEmployee.phone,
+      department: formData.department || existingEmployee.department,
+      position: formData.position || existingEmployee.position,
+      hireDate: formData.hireDate || existingEmployee.hireDate,
+      salary: formData.salary ? parseFloat(formData.salary) : existingEmployee.salary,
+      updatedAt: new Date().toISOString(),
+    };
+    setEmployees(employees.map(e => e.id === employeeId ? updatedEmployee : e));
+    closeAddModal();
+    resetFormData();
+    addNotification('Employee Updated', `Employee "${updatedEmployee.firstName} ${updatedEmployee.lastName}" has been updated.`, 'success');
+  };
+
+  const updateCustomer = (customerId: string): void => {
+    const existingCustomer = customers.find(c => c.id === customerId);
+    if (!existingCustomer) return;
+    
+    const updatedCustomer: Customer = {
+      ...existingCustomer,
+      name: formData.name || existingCustomer.name,
+      email: formData.email || existingCustomer.email,
+      phone: formData.phone || existingCustomer.phone,
+      company: formData.company || existingCustomer.company,
+      status: formData.status || existingCustomer.status,
+      notes: formData.notes || existingCustomer.notes,
+    };
+    setCustomers(customers.map(c => c.id === customerId ? updatedCustomer : c));
+    closeAddModal();
+    resetFormData();
+    addNotification('Customer Updated', `Customer "${updatedCustomer.name}" has been updated.`, 'success');
+  };
+
+  const updateTask = (taskId: string): void => {
+    const existingTask = tasks.find(t => t.id === taskId);
+    if (!existingTask) return;
+    
+    const assignedEmployee = employees.find(e => e.id === formData.assignedTo);
+    const updatedTask: Task = {
+      ...existingTask,
+      title: formData.title || existingTask.title,
+      description: formData.description || existingTask.description,
+      priority: formData.priority || existingTask.priority,
+      dueDate: formData.dueDate || existingTask.dueDate,
+      assignedTo: assignedEmployee ? `${assignedEmployee.firstName} ${assignedEmployee.lastName}` : (formData.assignedTo || existingTask.assignedTo),
+    };
+    setTasks(tasks.map(t => t.id === taskId ? updatedTask : t));
+    closeAddModal();
+    resetFormData();
+    addNotification('Task Updated', `Task "${updatedTask.title}" has been updated.`, 'success');
+  };
+
+  // Edit handlers - open modal with existing data
+  const handleEditProduct = (product: Product): void => {
+    setFormData({
+      name: product.name,
+      description: product.description,
+      price: product.price.toString(),
+      cost: product.cost.toString(),
+      category: product.category,
+      sku: product.sku,
+      stock: product.stock.toString(),
+      minStock: product.minStock.toString(),
+    });
+    setIsEditing(true);
+    setEditingItemId(product.id);
+    openAddModal('product');
+  };
+
+  const handleEditSale = (sale: Sale): void => {
+    setFormData({
+      customerId: sale.customerId,
+      employeeId: sale.employeeId,
+      productId: sale.products[0]?.productId || '',
+      quantity: sale.products[0]?.quantity.toString() || '1',
+      discount: sale.discount.toString(),
+      paymentMethod: sale.paymentMethod,
+      saleDate: sale.saleDate.split('T')[0],
+      notes: sale.notes,
+    });
+    setIsEditing(true);
+    setEditingItemId(sale.id);
+    openAddModal('sale');
+  };
+
+  const handleEditEmployee = (employee: Employee): void => {
+    setFormData({
+      employeeId: employee.employeeId,
+      firstName: employee.firstName,
+      lastName: employee.lastName,
+      email: employee.email,
+      phone: employee.phone,
+      department: employee.department,
+      position: employee.position,
+      hireDate: employee.hireDate.split('T')[0],
+      salary: employee.salary?.toString() || '',
+    });
+    setIsEditing(true);
+    setEditingItemId(employee.id);
+    openAddModal('employee');
+  };
+
+  const handleEditCustomer = (customer: Customer): void => {
+    setFormData({
+      name: customer.name,
+      email: customer.email,
+      phone: customer.phone,
+      company: customer.company,
+      status: customer.status,
+      notes: customer.notes,
+    });
+    setIsEditing(true);
+    setEditingItemId(customer.id);
+    openAddModal('customer');
+  };
+
+  const handleEditTask = (task: Task): void => {
+    setFormData({
+      title: task.title,
+      description: task.description,
+      priority: task.priority,
+      dueDate: task.dueDate.split('T')[0],
+      assignedTo: task.assignedTo,
+    });
+    setIsEditing(true);
+    setEditingItemId(task.id);
+    openAddModal('task');
   };
 
 
@@ -291,6 +618,8 @@ const App: React.FC = () => {
               stats={stats}
               tasks={tasks}
               settings={settings}
+              deals={deals}
+              sales={sales}
             />
           );
         }
@@ -300,6 +629,9 @@ const App: React.FC = () => {
             customers={customers}
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
+            onEditCustomer={handleEditCustomer}
+            onDeleteCustomer={deleteCustomer}
+            userRole={userRole}
           />
         );
       case 'sales':
@@ -308,6 +640,8 @@ const App: React.FC = () => {
             sales={sales}
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
+            onEditSale={handleEditSale}
+            onDeleteSale={deleteSale}
             userRole={userRole}
           />
         );
@@ -318,6 +652,8 @@ const App: React.FC = () => {
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
             onTaskComplete={markTaskComplete}
+            onEditTask={handleEditTask}
+            onDeleteTask={deleteTask}
           />
         );
       case 'products':
@@ -326,15 +662,8 @@ const App: React.FC = () => {
             products={products}
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
-            userRole={userRole}
-          />
-        );
-      case 'sales':
-        return (
-          <SalesTab
-            sales={sales}
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
+            onEditProduct={handleEditProduct}
+            onDeleteProduct={deleteProduct}
             userRole={userRole}
           />
         );
@@ -344,6 +673,8 @@ const App: React.FC = () => {
             employees={employees}
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
+            onEditEmployee={handleEditEmployee}
+            onDeleteEmployee={deleteEmployee}
             userRole={userRole}
           />
         );
@@ -412,6 +743,7 @@ const App: React.FC = () => {
         onFormDataChange={updateFormData}
         onAdd={handleAdd}
         onClose={closeAddModal}
+        isEditing={isEditing}
       />
 
       <NotificationModal

@@ -4,6 +4,10 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { dashboardStyles } from '../../styles/dashboard';
 import { AdminDashboardStats, Product, Sale, Employee, Task } from '../../types';
 import { formatCurrency } from '../../utils/helpers';
+import { LineChartCard } from '../charts/LineChartCard';
+import { BarChartCard } from '../charts/BarChartCard';
+import { PieChartCard } from '../charts/PieChartCard';
+import { getSalesTrendData, getRevenueByMonthData, getProductPerformanceData, getTaskStatusData } from '../../utils/chartHelpers';
 
 interface AdminDashboardTabProps {
   stats: AdminDashboardStats;
@@ -69,6 +73,38 @@ export const AdminDashboardTab: React.FC<AdminDashboardTabProps> = ({
           <Text style={dashboardStyles.statLabel}>Low Stock Items</Text>
         </View>
       </View>
+
+      {/* Sales Trend Chart */}
+      {sales.length > 0 && (
+        <LineChartCard
+          title="📈 Sales Trend (Last 6 Months)"
+          data={getSalesTrendData(sales)}
+        />
+      )}
+
+      {/* Revenue by Month Chart */}
+      {sales.length > 0 && (
+        <BarChartCard
+          title="💰 Revenue by Month"
+          data={getRevenueByMonthData(sales)}
+        />
+      )}
+
+      {/* Product Performance Chart */}
+      {sales.length > 0 && products.length > 0 && (
+        <BarChartCard
+          title="📦 Top Product Sales"
+          data={getProductPerformanceData(sales, products)}
+        />
+      )}
+
+      {/* Task Status Chart */}
+      {tasks.length > 0 && (
+        <PieChartCard
+          title="✅ Task Completion Status"
+          data={getTaskStatusData(tasks)}
+        />
+      )}
 
       {lowStockProducts.length > 0 && (
         <View style={dashboardStyles.alertSection}>

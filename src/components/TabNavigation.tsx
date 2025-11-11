@@ -37,7 +37,7 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({ activeTab, onTabPr
             <Icon 
               name={tab.icon} 
               size={18} 
-              color={activeTab === tab.key ? '#6366f1' : '#64748b'} 
+              color={activeTab === tab.key ? '#ec4899' : '#be185d'} 
             />
             <Text style={[styles.tabText, activeTab === tab.key && styles.activeTabText, { marginTop: 4 }]}>
               {tab.label}

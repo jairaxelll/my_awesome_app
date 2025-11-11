@@ -3,7 +3,7 @@ import { Settings } from '../types';
 export const getStatusColor = (status: string): string => {
   switch (status) {
     case 'lead': return '#f59e0b';
-    case 'prospect': return '#3b82f6';
+    case 'prospect': return '#ec4899';
     case 'customer': return '#059669';
     case 'inactive': return '#6b7280';
     case 'completed': return '#10b981';
@@ -16,9 +16,9 @@ export const getStatusColor = (status: string): string => {
 
 export const getStageColor = (stage: string): string => {
   switch (stage) {
-    case 'prospecting': return '#f59e0b';
-    case 'qualification': return '#3b82f6';
-    case 'proposal': return '#8b5cf6';
+    case 'prospecting': return '#fbb6ce';
+    case 'qualification': return '#f472b6';
+    case 'proposal': return '#ec4899';
     case 'negotiation': return '#f97316';
     case 'closed-won': return '#059669';
     case 'closed-lost': return '#dc2626';

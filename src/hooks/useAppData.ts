@@ -39,7 +39,7 @@ export const useAppData = () => {
         setTasks(getSampleTasks());
         setNotes(getSampleNotes());
         setActivities(getSampleActivities());
-        addNotification('Welcome to Pro CRM!', 'Your comprehensive business management suite is ready to use.', 'info');
+        addNotification('Bienvenida a Todo para uñas', 'Tu catálogo especializado en productos y servicios para uñas está listo para usarse.', 'info');
       }
     };
 

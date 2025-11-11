@@ -2,19 +2,26 @@ import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { dashboardStyles } from '../../styles/dashboard';
-import { Customer, Deal, Task, DashboardStats } from '../../types';
+import { Customer, Deal, Task, DashboardStats, Sale } from '../../types';
 import { formatCurrency, formatDate, getTaskStatusIcon } from '../../utils/helpers';
+import { LineChartCard } from '../charts/LineChartCard';
+import { PieChartCard } from '../charts/PieChartCard';
+import { getDealPipelineData, getTaskStatusData } from '../../utils/chartHelpers';
 
 interface DashboardTabProps {
   stats: DashboardStats;
   tasks: Task[];
   settings: any;
+  deals: Deal[];
+  sales: Sale[];
 }
 
 export const DashboardTab: React.FC<DashboardTabProps> = ({
   stats,
   tasks,
   settings,
+  deals,
+  sales,
 }) => {
   const overdueTasks = tasks.filter(task => 
     task.status !== 'completed' && 
@@ -58,6 +65,22 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
           <Text style={dashboardStyles.statLabel}>Pending Tasks</Text>
         </View>
       </View>
+
+      {/* Deal Pipeline Chart */}
+      {deals.length > 0 && (
+        <PieChartCard
+          title="📊 Deal Pipeline by Stage"
+          data={getDealPipelineData(deals)}
+        />
+      )}
+
+      {/* Task Status Chart */}
+      {tasks.length > 0 && (
+        <PieChartCard
+          title="✅ Task Status Distribution"
+          data={getTaskStatusData(tasks)}
+        />
+      )}
 
       {overdueTasks.length > 0 && (
         <View style={dashboardStyles.alertSection}>
